@@ -1,0 +1,97 @@
+body {
+    background-color: white;
+}
+
+h1 {
+    color: navy;
+    text-align: center;
+}
+
+h2 {
+    color: black;
+    text-align: center;
+}
+
+p {
+    margin: 2%;
+}
+
+.main-title {
+    margin: auto;
+    border: 3px solid blue;
+}
+
+.disclaimer-text {
+    color: black;
+    text-align: center;
+}
+
+.category-button {
+    background-color: white;
+    border: 3px solid blue;
+    padding: 20px 30px;
+    
+}
+
+.thumbnail-button {
+    background-color: white;
+    border: 3px solid black;
+    padding: 20px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 1%;
+    width: 25%;
+}
+
+.thumbnail-title {
+    margin: auto;
+    color: black;
+    font-size: 16px; 
+}
+
+.overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.25);
+    z-index:2;
+    cursor: pointer;
+}
+
+.project-overlay {
+    position: absolute;
+    display: none;
+    height: 80%;
+    width: 50%;
+    top: 0;
+    transform: translate(42.5%, 10%);
+    justify-content: center;
+    background-color: white;
+    z-index: 3;
+    border-radius: 5px;
+}
+
+.project-title {
+    padding: 25px 25px;
+    font-size: 16px;
+}
+
+.image-container {
+    max-width: 100%;
+    border: 1px solid grey;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.image-container img {
+    width: 100%;
+    height 100%;
+    object-fit: fill;
+    margin-bottom: -4px;
+    border-radius: 5px;
+}

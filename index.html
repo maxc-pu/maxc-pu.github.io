@@ -1,0 +1,110 @@
+---
+layout: none
+current_type: none
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Dev Portfolio</title>
+        <link rel="stylesheet" href="style.css">
+        
+        <style>
+            .piechart {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                background-image: conic-gradient(
+                    red 0% ,
+                    blue 20% 80%,
+                    green 80% 100%
+                );
+            }
+        </style>
+
+        <script>
+            function getLanguagePercent(language) {
+                let totalLines = 0;
+                let langMap = new Map();
+                for (project in {{ data.site.projects }}) {
+                    totalLines += {{ project.lines_of_code }};
+
+                    let tmpLang = {{ project.language[0] }};
+                    let tmpLines = {{ project.lines_of_code }};
+
+                    /* check if the language is already in the langmap */
+                    if (tmpLang in langMap) {
+                        langMap.set(tmpLang, langMap.get(tmpLang) + tmpLines);
+                    } else {
+                        langMap.set(tmpLang, tmpLines);
+                    }
+                }
+                return (langMap.get(tmpLang) / (double)totalLines) * 360.0;
+            }
+        </script>
+    </head>
+
+    <body>
+        <h1 class="main-title">Max</h1>
+        <p class="disclaimer-text">/* human-generated website */</p>
+
+        <h2>Project Categories:</h2>
+        <hr>
+
+        <ul>
+          {% for type in site.data.types %}
+          <button style="background-color: white; padding: 0px 0px; border: none; margin: 30px 10px">
+            <a href="/{{ type.name }}.html" class="category-button" style="text-decoration-line: none; text-transform: capitalize; color: black; font-weight: bold;">
+            {{ type.name }}
+            </a>
+          </button>
+          {% endfor %}
+        </ul>
+
+        <hr style="margin-vertical: 3%">
+        <h3 style="text-align: center">My projects are:</h3>
+        
+        <div id="langChart" class="piechart"></div>
+
+
+        <script>
+            function getLanguagePercent(language) {
+                let totalLines = 0;
+                let langMap = new Map();
+                for (project in {{ data.site.projects }}) {
+                    totalLines += {{ project.lines_of_code }};
+
+                    let tmpLang = {{ project.language[0] }};
+                    let tmpLines = {{ project.lines_of_code }};
+
+                    /* check if the language is already in the langmap */
+                    if (tmpLang in langMap) {
+                        langMap.set(tmpLang, langMap.get(tmpLang) + tmpLines);
+                    } else {
+                        langMap.set(tmpLang, tmpLines);
+                    }
+                }
+                return (langMap.get(tmpLang) / (double)totalLines) * 100.0;
+            }
+
+            function getLanguageMap() {
+                let langMap = new Map();
+                for (let project in {{ data.site.projects }}) {
+                    totalLines += {{ project.lines_of_code }};
+
+                    let tmpLang = {{ project.language[0] }};
+                    let tmpLines = {{ project.lines_of_code }};
+
+                    /* check if the language is already in the langmap */
+                    if (tmpLang in langMap) {
+                        langMap.set(tmpLang, langMap.get(tmpLang) + tmpLines);
+                    } else {
+                        langMap.set(tmpLang, tmpLines);
+                    }
+                }
+                return langMap;
+            }
+        </script>
+    </body>
+</html>

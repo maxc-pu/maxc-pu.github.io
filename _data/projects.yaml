@@ -1,0 +1,82 @@
+- name: 'Mandala Project'
+  type: research
+  image_path: mandala.png
+  link: 'https://docs.google.com/presentation/d/e/2PACX-1vQ_YViCSJnCmE-JiCiAWGg7D6dVbCws6RZcq8su5echEujebJwqc2O-eHMkrXp2YA/pub?start=false&loop=false&delayms=3000&pli=1&slide=id.g373baeba132_5_6'
+  purpose: 'organize research concepts and ideation'
+  role: developer
+  member_count: 5
+  developer_count: 1
+  lines_of_code: 4400
+  percent_ai: 0.0
+  language:
+    - c#
+
+- name: 'Clean Calorie'
+  type: apps
+  image_path: clean.png
+  link: 'https://play.google.com/store/apps/details?id=com.maxschuler.clean_calorie&hl=en'
+  purpose: 'analyze micronutrient balance and provide typically paywalled features for free'
+  role: developer
+  member_count: 1
+  developer_count: 1
+  lines_of_code: 12933
+  percent_ai: 25.5
+  language:
+    - dart
+    - python
+
+- name: 'Zero-shot multi-task systems for parallel food classification and portion estimation tasks'
+  type: experiments
+  image_path: zero.png
+  link: https://www.overleaf.com/read/wpddmhhmqcnb#6dbeed
+  purpose: build a free, local food portion estimation model for Clean Calorie
+  lines_of_code: 460
+  percent_ai: 92.8
+  language:
+    - python
+
+- name: 'The Stairway'
+  type: gamedev
+  image_path: stairway.png
+  link: 'https://store.steampowered.com/app/3210790/The_Stairway/'
+  lines_of_code: 2000
+  percent_ai: 0.0
+  language:
+    - c#
+
+- name: 'Meet Max'
+  type: sandbox
+  link: 'https://studio.code.org/projects/javalab/3c8ukfrjgbPp6kt9bsex1lr01_LCmlW3VnNm2Kmbyiw'
+  challenge: 'This project was built in a 2D environment where the user can only create a line from one coordinate to another. This is where I first built a text engine and my first attempt at a 3D sphere.'
+  lines_of_code: 3466
+  percent_ai: 0.0
+  language:
+    - java
+
+- name: "Happy Birthday!"
+  type: sandbox
+  link: 'https://studio.code.org/projects/javalab/YTpSu1sSrmHjCLidTVak3NnR1EZ4ISFae4uly_uNTHg'
+  purpose: to surprise my mom
+  challenge: 'This project was built in a 2D environment where the user can only create a line from one coordinate to another. This is where I first built a 3D book animation.'
+  lines_of_code: 1486
+  percent_ai: 0.0
+  language:
+    - java
+
+- name: 'Car Story'
+  type: sandbox
+  link: 'https://studio.code.org/projects/javalab/lpMxk5hMmNst8ILDP3PO1O_FjXKZydf3wAQ3Tv7qFsU'
+  challenge: 'This project was built in a 2D environment where the user can only create a line from one coordinate to another. This is where I initially built a 3D rotating cube; however, I was unsatisfied and attempted to build a cube with point-of-view warping. This added some unwanted wobble to the cube.'
+  lines_of_code: 2822
+  percent_ai: 0.0
+  language:
+    - java
+
+- name: 'Correlation, not Causation'
+  type: sandbox
+  link: 'https://studio.code.org/projects/javalab/5btdzzt2Pq1uXRxRDz7hTRf6qXZocnMvS38vAZCj8ao'
+  challenge: 'This was my first experience with using 2D coordinates to create images.'
+  lines_of_code: 389
+  percent_ai: 0.0
+  language:
+    - java

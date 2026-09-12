@@ -1,0 +1,111 @@
+---
+layout: none
+---
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Category Page</title>
+        <link rel="stylesheet" href="style.css">
+    <body>
+        <h1 style="text-transform: capitalize;" class="main-title">{{ page.title }}</h1>
+  
+        {% for type in site.data.types %}
+        {% if type.name == page.title %}
+        <p class="disclaimer-text">{{ type.description }}</p>
+        {% endif %}
+        {% endfor %}
+  
+        <ul>
+            {% for project in site.data.projects %}
+            {% if project.type == page.title %}
+
+            <!-- overlay -->
+            <div id="{{ project.name }}" class="project-overlay">
+                <div style="width: 60%; float: left; padding: 0px 20px; overflow-wrap: break-word; display: flex; flex-direction: column;">
+                    <strong class="project-title">{{ project.name }}</strong>
+                    <div class="image-container">
+                        <img src="assets/images/{{ project.image_path }}">
+                    </div>
+                    <a href="{{ project.link }}">Link: {{ project.link }}</a>
+                </div>
+                
+                <div style="border-left: 1px solid grey; height: 100%;"></div>
+
+                <div style="width: 40%; float: right; padding: 0px 20px; display: flex; flex-direction: column;">
+                    <strong style="margin-top: 10%">Details</strong>
+                    {% if project.purpose != null %}
+                    <p>Purpose: {{ project.purpose }}</p>
+                    {% else %}
+                    <p>Purpose: for fun</p>
+                    {% endif %}
+                    {% if project.challenge != null %}
+                    <p>Challenge: {{ project.challenge }}</p>
+                    {% endif %}
+                    <strong style="margin-top: 5%">Group info:</strong>
+                    {% if project.role != null %}
+                    <p>Role: {{ project.role }}</p>
+                    {% endif %}
+                    {% if project.member_count > 1 %}
+                    <p>Member count: {{ project.member_count }}</p>
+                    <p>Developers: {{ project.developer_count }}</p>
+                    {% else %}
+                    <p>Member count: solo</p>
+                    {% endif %}
+                    <strong style="margin-top: 5%">Transparency:</strong>
+                    <p>Lines of code: {{ project.lines_of_code }}</p>
+                    <p>% of code by gen. AI: {{ project.percent_ai }}%</p>
+                    <strong style="margin-top: 5%">Language(s):</strong>
+                    {% for language in project.language %}
+                    <p style="margin: 0%">- {{ language }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- buttons -->
+            <button class="thumbnail-button" onclick="on('{{ project.name }}')">
+                <strong class="thumbnail-title">{{ project.name }}</strong>
+                <p>Lines of code: {{ project.lines_of_code }}</p>
+                {% if project.percent_ai == 0 %}
+                <p>No gen. AI used</p>
+                {% else %}
+                <p>{{ project.percent_ai }}% coded by gen. AI</p>
+                {% endif %}
+            </button>
+
+            {% endif %}
+            {% endfor %}
+        </ul>
+
+        <!-- this is my overlay -->
+        <div id="overlay" class="overlay" onclick="off()"></div>
+        
+        <script>
+            function on(name) {
+                document.getElementById(name).style.display = "flex";
+                document.getElementById("overlay").style.display = "block";
+            }
+
+            function off() {
+                const projects = document.getElementsByClassName("project-overlay");
+                for (let i = 0; i < projects.length; i++) {
+                    projects.item(i).style.display = "none";
+                }
+                document.getElementById("overlay").style.display = "none";
+            }
+
+            function linkType() {
+                let name = page.title;
+                if (name == research) return 'Paper/Poster';
+                if (name == sandbox) return 'Project Link';
+                if (name == experiments) return 'Write-Up';
+                if (name == apps) return 'Site';
+                if (name == gamedev) return 'Link';
+            }
+        </script>
+
+        <div>
+            {{ content }}
+        </div>
+    </body>
+</html>
