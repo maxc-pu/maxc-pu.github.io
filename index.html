@@ -9,40 +9,20 @@ current_type: none
         <meta charset="utf-8">
         <title>Dev Portfolio</title>
         <link rel="stylesheet" href="style.css">
-        
+       
+        <!-- setting up a general pie chart style -->
         <style>
             .piechart {
                 width: 200px;
                 height: 200px;
-                border-radius: 50%;
+                border-radius: 10%;
                 background-image: conic-gradient(
-                    red 0% ,
+                    red 0% 20%,
                     blue 20% 80%,
                     green 80% 100%
-                );
+                )
             }
         </style>
-
-        <script>
-            function getLanguagePercent(language) {
-                let totalLines = 0;
-                let langMap = new Map();
-                for (project in {{ data.site.projects }}) {
-                    totalLines += {{ project.lines_of_code }};
-
-                    let tmpLang = {{ project.language[0] }};
-                    let tmpLines = {{ project.lines_of_code }};
-
-                    /* check if the language is already in the langmap */
-                    if (tmpLang in langMap) {
-                        langMap.set(tmpLang, langMap.get(tmpLang) + tmpLines);
-                    } else {
-                        langMap.set(tmpLang, tmpLines);
-                    }
-                }
-                return (langMap.get(tmpLang) / (double)totalLines) * 360.0;
-            }
-        </script>
     </head>
 
     <body>
@@ -52,7 +32,7 @@ current_type: none
         <h2>Project Categories:</h2>
         <hr>
 
-        <ul>
+        <ul style="display: flex; justify-content: center; padding: 0; flex-wrap: wrap">
           {% for type in site.data.types %}
           <button style="background-color: white; padding: 0px 0px; border: none; margin: 30px 10px">
             <a href="/{{ type.name }}.html" class="category-button" style="text-decoration-line: none; text-transform: capitalize; color: black; font-weight: bold;">
@@ -63,47 +43,105 @@ current_type: none
         </ul>
 
         <hr style="margin-vertical: 3%">
-        <h3 style="text-align: center">My projects are:</h3>
-        
-        <div id="langChart" class="piechart"></div>
+        <h3 id="text" style="text-align: center">My projects are:</h3>
 
+        <div id="langChart" class="piechart" style="margin: auto"></div>
+        
+        <div id="langLabels" style="text-align: center"></div>
+
+        <!-- this is a little trick where I'm utilizing invisible div elements
+            to read and write their id's and classes to be easily accessible
+            from javascript code -->
+        <ul>
+            {% for project in site.data.projects %}
+            <div id="{{ project.lines_of_code }}" class="lines {{ project.language[0] }}"></div>
+            {% endfor %}
+        </ul>
 
         <script>
-            function getLanguagePercent(language) {
-                let totalLines = 0;
-                let langMap = new Map();
-                for (project in {{ data.site.projects }}) {
-                    totalLines += {{ project.lines_of_code }};
+            /* there's only a certain amount of general purpose languages out there, sometimes the best solution is a long list */
+            let colors = ['skyblue', 'dodgerblue', 'mediumseagreen', 'indianred', 'purple', 'cyan'];
+            
+            /* runs on startup */
+            buildPieChart();
+            writePieLabels();
 
-                    let tmpLang = {{ project.language[0] }};
-                    let tmpLines = {{ project.lines_of_code }};
+            /*----------FUNCTIONS START HERE----------*/
 
-                    /* check if the language is already in the langmap */
-                    if (tmpLang in langMap) {
-                        langMap.set(tmpLang, langMap.get(tmpLang) + tmpLines);
-                    } else {
-                        langMap.set(tmpLang, tmpLines);
-                    }
+            /* refreshes my pie chart */
+            function buildPieChart() {
+                const percentMap = getPercentMap();
+                let i = 0;
+
+                let conicGradient = `conic-gradient(`;
+                /* this is so that if i add different languages in the future, it automatically updates */
+                for (let [key, value] of percentMap) {
+                    conicGradient += `${colors[i]} ${value[0]}% ${value[1]}%, `;
+                    i++;
                 }
-                return (langMap.get(tmpLang) / (double)totalLines) * 100.0;
+                conicGradient = conicGradient.slice(0, -2);
+                conicGradient += `)`;
+                /* finish */
+                document.getElementById("langChart").style.backgroundImage = conicGradient;
             }
 
-            function getLanguageMap() {
-                let langMap = new Map();
-                for (let project in {{ data.site.projects }}) {
-                    totalLines += {{ project.lines_of_code }};
+            function writePieLabels() {
+                let i = 0; /* remember, I have to iterate through the colors */
 
-                    let tmpLang = {{ project.language[0] }};
-                    let tmpLines = {{ project.lines_of_code }};
+                let html = '<ul style="padding: 0">';
+                for (let lang of getLanguageNames()) {
+                    html += `<p style="color: ${colors[i]}; margin: 0.5%;">`;
+                    html += Math.round(getPercentLines(lang)) + '% ' + lang;
+                    html += '</p>';
 
-                    /* check if the language is already in the langmap */
-                    if (tmpLang in langMap) {
-                        langMap.set(tmpLang, langMap.get(tmpLang) + tmpLines);
-                    } else {
-                        langMap.set(tmpLang, tmpLines);
+                    i++;
+                }
+                html += '</ul>';
+                document.getElementById("langLabels").innerHTML = html;
+            }
+
+            /* multi-use */
+            function getLanguageNames() {
+                let langs = [];
+                for (let element of document.getElementsByClassName("lines")) {
+                    if (!langs.includes(element.classList[1])) {
+                        langs.push(`${element.classList[1]}`);
                     }
                 }
-                return langMap;
+                return langs;
+            }
+
+            /* the main function that returns everything useful for the code pie chart */
+            function getPercentMap() {
+                const percentMap = new Map();
+                const languages = getLanguageNames();
+                let current = 0;
+                for (let i = 0; i < languages.length; i++) {
+                    percentMap.set(languages[i], [current, (current + getPercentLines(languages[i]))]);
+                    console.log(`${languages[i]}: ${current} ${current + getPercentLines(languages[i])} | ${getPercentLines(languages[i])}`);
+                    current += getPercentLines(languages[i]);
+                }
+                return percentMap;
+            }
+
+            /* total lines and percent lines are here to simplify the percentmap code */
+            function getTotalLines() {
+                let total = 0;
+                const list = document.getElementsByClassName("lines");
+                for (let element of list) {
+                    total += parseInt(element.id);
+                }
+                return total;
+            }
+
+            function getPercentLines(language) {
+                let langLines = 0;
+                let totalLines = getTotalLines();
+
+                for (let element of document.getElementsByClassName(language)) {
+                    langLines += parseInt(element.id);
+                }
+                return (langLines * 100) / totalLines;
             }
         </script>
     </body>

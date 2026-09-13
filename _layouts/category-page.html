@@ -22,7 +22,7 @@ layout: none
 
             <!-- overlay -->
             <div id="{{ project.name }}" class="project-overlay">
-                <div style="width: 60%; float: left; padding: 0px 20px; overflow-wrap: break-word; display: flex; flex-direction: column;">
+                <div style="overflow: scroll; width: 60%; float: left; padding: 0px 20px; overflow-wrap: break-word; display: flex; flex-direction: column;">
                     <strong class="project-title">{{ project.name }}</strong>
                     <div class="image-container">
                         <img src="assets/images/{{ project.image_path }}">
@@ -32,7 +32,7 @@ layout: none
                 
                 <div style="border-left: 1px solid grey; height: 100%;"></div>
 
-                <div style="width: 40%; float: right; padding: 0px 20px; display: flex; flex-direction: column;">
+                <div style="overflow: scroll; width: 40%; float: right; padding: 0px 20px; display: flex; flex-direction: column;">
                     <strong style="margin-top: 10%">Details</strong>
                     {% if project.purpose != null %}
                     <p>Purpose: {{ project.purpose }}</p>
