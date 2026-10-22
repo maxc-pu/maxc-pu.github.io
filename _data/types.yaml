@@ -10,6 +10,7 @@ developing a machine learning model. Model architecture design and all written w
 
 - name: sandbox
   description: 'Projects in this category were built with minimal libraries in an isolated development environment. These are typically in 2D and typically involve unique constraints during development. None of these projects were supported by generative artificial intelligence.'
+  disabled: true
 
 - name: gamedev
   description: 'Games.'

@@ -28,9 +28,17 @@ p {
 
 .category-button {
     background-color: white;
-    border: 3px solid blue;
-    padding: 20px 30px;
-    
+    border: 2px solid black;
+    padding: 30px 30px;
+    cursor: pointer;
+    margin: 0px 10px;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.category-button[disabled] {
+    cursor: default;
+    border: 2px solid grey;
 }
 
 .thumbnail-button {

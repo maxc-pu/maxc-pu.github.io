@@ -32,13 +32,20 @@ current_type: none
         <h2>Project Categories:</h2>
         <hr>
 
-        <ul style="display: flex; justify-content: center; padding: 0; flex-wrap: wrap">
+        <ul style="display: flex; justify-content: center; padding: 0px; flex-wrap: wrap">
           {% for type in site.data.types %}
-          <button style="background-color: white; padding: 0px 0px; border: none; margin: 30px 10px">
-            <a href="/{{ type.name }}.html" class="category-button" style="text-decoration-line: none; text-transform: capitalize; color: black; font-weight: bold;">
+          {% if type.disabled %}
+          <button onclick="location.href='/{{ type.name }}.html'" class="category-button" disabled>
+            {{ type.name }}
+            (temporarily disabled)
+            </a>
+          </button>
+          {% else %}
+          <button onclick="location.href='/{{ type.name }}.html'" class="category-button">
             {{ type.name }}
             </a>
           </button>
+          {% endif %}
           {% endfor %}
         </ul>
 
